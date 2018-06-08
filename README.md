@@ -1,3 +1,6 @@
+# Arcade Game Project
+This project is part of Udacity's Front End Developer Nanodegree program.
+
 frontend-nanodegree-arcade-game
 ===============================
 
