@@ -50,16 +50,32 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(key) {
   switch (key) {
     case "left":
-    this.ctrlX -= 100;
+      if (this.ctrlX > 0) {
+        this.ctrlX -= 100;
+      } else {
+        this.ctrlX = 0;
+      }
       break;
     case "up":
-    this.ctrlY -= 100;
+      if (this.ctrlY > 0 ) {
+        this.ctrlY -= 100;
+      } else {
+        this.ctrlY = 0;
+      }
       break;
     case "right":
-    this.ctrlX += 100;
+      if (this.ctrlX < 400) {
+        this.ctrlX += 100;
+      } else {
+        this.ctrlX = 400;
+      }
       break;
     case "down":
-    this.ctrlY += 100;
+      if (this.ctrlY < 400) {
+        this.ctrlY += 100;
+      } else {
+        this.ctrlY = 400;
+      }
       break;
     // default:
   }
