@@ -6,8 +6,10 @@ var Enemy = function() {
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = "images/enemy-bug.png";
-  this.randomSpeed = Math.floor((Math.random() * 100) + 1);
-  this.randomPosition = Math.floor((Math.random() * 250) + 0);
+  this.randomSpeed = Math.floor(Math.random() * 100 + 1);
+  this.randomPosition = Math.floor(Math.random() * 250 + 0);
+  this.height = 60;
+  this.width = 80;
   this.x = 0;
   this.y = 0;
 };
@@ -20,7 +22,20 @@ Enemy.prototype.update = function(dt) {
   // all computers.
   this.x += 10 * (dt * this.randomSpeed);
   this.y = this.randomPosition;
-  // this.y = 250;
+
+  let dx = this.x - player.x;
+  let dy = this.y - player.y;
+  let distance = Math.sqrt(dx * dx + dy * dy);
+
+  if (
+    this.x < player.x + player.width &&
+    this.x + this.width > player.x &&
+    this.y < player.y + player.height &&
+    this.height + this.y > player.y
+  ) {
+    // collision detected!
+    console.log("colision detected");
+  }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -36,7 +51,9 @@ let bug = new Enemy();
 let Player = function() {
   this.sprite = "images/char-boy.png";
   this.ctrlX = 200;
-  this.ctrlY = 200;
+  this.ctrlY = 400;
+  this.height = 50;
+  this.width = 50;
   // this.x = 200;
   // this.y = 200;
 };
@@ -60,7 +77,7 @@ Player.prototype.handleInput = function(key) {
       }
       break;
     case "up":
-      if (this.ctrlY > 0 ) {
+      if (this.ctrlY > 0) {
         this.ctrlY -= 100;
       } else {
         this.ctrlY = 0;
