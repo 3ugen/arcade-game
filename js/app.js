@@ -67,9 +67,20 @@ let Player = function() {
   // this.y = 200;
 };
 
+Player.prototype.reset = function () {
+  // if reach watter reset
+  // if collision reset
+  if (this.y === 0) {
+    this.ctrlX = 200;
+    this.ctrlY = 400;
+  }
+}
+
 Player.prototype.update = function() {
+  this.reset();
   this.x = this.ctrlX;
   this.y = this.ctrlY;
+
 };
 
 Player.prototype.render = function() {
