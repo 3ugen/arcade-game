@@ -1,3 +1,4 @@
+
 // Enemies our player must avoid
 var Enemy = function() {
   // Variables applied to each of our instances go here,
@@ -8,8 +9,8 @@ var Enemy = function() {
   this.sprite = "images/enemy-bug.png";
   this.randomSpeed = Math.floor(Math.random() * 100 + 1);
   this.randomPosition = Math.floor(Math.random() * 250 + 0);
-  this.height = 60;
-  this.width = 80;
+  this.height = 50;
+  this.width = 50;
   this.x = 0;
   this.y = 0;
 };
@@ -24,7 +25,12 @@ Enemy.prototype.update = function(dt) {
   this.collisionDetection();
 
   if (this.x < 505) {
-    this.x += 10 * (dt * this.randomSpeed);
+    // this.x += 10 * (dt * this.randomSpeed);
+    this.x += 10 * dt;
+    // allEnemies.shift();
+    // if (allEnemies.length < 6) {
+    //   allEnemies.push(new Enemy())
+    // }
   } else {
     this.x = 0;
   }
@@ -44,6 +50,7 @@ Enemy.prototype.collisionDetection = function () {
   ) {
     // collision detected!
     console.log("colision detected");
+    return true;
   }
 }
 
@@ -52,7 +59,7 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-let bug = new Enemy();
+// let bug = new Enemy();
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -70,16 +77,33 @@ let Player = function() {
 Player.prototype.reset = function () {
   // if reach watter reset
   // if collision reset
-  if (this.y === 0) {
-    this.ctrlX = 200;
-    this.ctrlY = 400;
+
+  function colision (val) {// need to find a better or more intuitive solution
+    return val.collisionDetection();
   }
+
+if (allEnemies.every(colision)) {
+  this.ctrlX = 200;
+  this.ctrlY = 400;
+} else if (this.y === 0) {
+  this.ctrlX = 200;
+  this.ctrlY = 400;
+}
+
+  // allEnemies.forEach(function (bug) {
+  //   if (bug.collisionDetection()) {
+  //     this.ctrlX = 200;
+  //     this.ctrlY = 400;
+  //   }
+  // })
+
 }
 
 Player.prototype.update = function() {
   this.reset();
   this.x = this.ctrlX;
   this.y = this.ctrlY;
+
 
 };
 
@@ -125,7 +149,11 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-allEnemies.push(bug);
+if (allEnemies.length === 0) {
+  allEnemies.push(new Enemy())
+}
+
+// allEnemies.push(new Enemy());
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
