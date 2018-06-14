@@ -3,12 +3,33 @@
 var Enemy = function() {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
+  const position = function () {
+    const position =  Math.ceil(Math.random()*3);
+    if (position === 1) {
+      return 225;
+    } else if (position === 2) {
+      return 145;
+    } else if (position === 3) {
+      return 60;
+    }
+  }
+
+const speed = function () {
+  const speed =  Math.ceil(Math.random()*3);
+  if (speed === 1) {
+    return 15;
+  } else if (speed === 2) {
+    return 25;
+  } else if (speed === 3) {
+    return 35;
+  }
+}
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = "images/enemy-bug.png";
-  this.randomSpeed = Math.floor(Math.random() * 100 + 1);
-  this.randomPosition = Math.floor(Math.random() * 250 + 0);
+  this.randomSpeed = speed();
+  this.randomPosition = position();
   this.height = 50;
   this.width = 50;
   this.x = 0;
@@ -21,12 +42,13 @@ Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
-
+  // console.log(dt);
+  // console.log(allEnemies.length);
   this.collisionDetection();
 
   if (this.x < 505) {
-    // this.x += 10 * (dt * this.randomSpeed);
-    this.x += 10 * dt;
+    this.x += 10 * (dt * this.randomSpeed);
+    // this.x += 10 * dt;
     // allEnemies.shift();
     // if (allEnemies.length < 6) {
     //   allEnemies.push(new Enemy())
@@ -34,10 +56,16 @@ Enemy.prototype.update = function(dt) {
   } else {
     this.x = 0;
   }
+
+  // console.log(this.randomPosition);
   this.y = this.randomPosition;
+  // this.y = 225;
+  // this.y = 145;
+  // this.y = 60;
 };
 
 Enemy.prototype.collisionDetection = function () {
+  // Adapted from MDN: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
   let dx = this.x - player.x;
   let dy = this.y - player.y;
   let distance = Math.sqrt(dx * dx + dy * dy);
@@ -50,7 +78,9 @@ Enemy.prototype.collisionDetection = function () {
   ) {
     // collision detected!
     console.log("colision detected");
-    return true;
+    // return true;
+    player.ctrlX = 200;
+    player.ctrlY = 400;
   }
 }
 
@@ -78,17 +108,22 @@ Player.prototype.reset = function () {
   // if reach watter reset
   // if collision reset
 
-  function colision (val) {// need to find a better or more intuitive solution
-    return val.collisionDetection();
-  }
+  // function colision (val) {// need to find a better or more intuitive solution
+  //   return val.collisionDetection();
+  // }
 
-if (allEnemies.every(colision)) {
+// if (allEnemies.every(colision)) {
+//   this.ctrlX = 200;
+//   this.ctrlY = 400;
+// } else if (this.y === 0) {
+//   this.ctrlX = 200;
+//   this.ctrlY = 400;
+// }
+
+// if (this.y === -25) {
   this.ctrlX = 200;
   this.ctrlY = 400;
-} else if (this.y === 0) {
-  this.ctrlX = 200;
-  this.ctrlY = 400;
-}
+// }
 
   // allEnemies.forEach(function (bug) {
   //   if (bug.collisionDetection()) {
@@ -100,9 +135,12 @@ if (allEnemies.every(colision)) {
 }
 
 Player.prototype.update = function() {
-  this.reset();
+
   this.x = this.ctrlX;
   this.y = this.ctrlY;
+  if (this.y === -25){
+    this.reset();
+  }
 
 
 };
@@ -122,7 +160,8 @@ Player.prototype.handleInput = function(key) {
       break;
     case "up":
       if (this.ctrlY > 0) {
-        this.ctrlY -= 100;
+        this.ctrlY -= 85;
+        console.log(this.ctrlY);
       } else {
         this.ctrlY = 0;
       }
@@ -136,7 +175,8 @@ Player.prototype.handleInput = function(key) {
       break;
     case "down":
       if (this.ctrlY < 400) {
-        this.ctrlY += 100;
+        this.ctrlY += 85;
+        console.log(this.ctrlY);
       } else {
         this.ctrlY = 400;
       }
@@ -149,7 +189,7 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-if (allEnemies.length === 0) {
+while (allEnemies.length < 3) {
   allEnemies.push(new Enemy())
 }
 
