@@ -18,6 +18,22 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
+     let paused = false;
+     function togglePause() {
+       if (!paused) {
+         paused = true;
+       } else if (paused) {
+       paused= false;
+     }
+     }
+     window.addEventListener('keydown', function (e) {
+        var key = e.keyCode;
+        if (key === 80)// p key
+        {
+          togglePause();
+        }
+      });
+
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -44,7 +60,13 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
+
+
+
+        if(!paused){
+          update(dt);
+        }
+        // update(dt);
         render();
 
         /* Set our lastTime variable which is used to determine the time delta

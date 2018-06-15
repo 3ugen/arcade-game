@@ -105,9 +105,15 @@ Player.prototype.update = function() {
   this.x = this.ctrlX;
   this.y = this.ctrlY;
   if (this.y === -25) {
+    // this.win();
     this.reset();
   }
 };
+
+// Player.prototype.win = function () {
+//   this.reset();
+//   allEnemies = [];
+// }
 
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
