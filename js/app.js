@@ -1,10 +1,11 @@
-
 // Enemies our player must avoid
-var Enemy = function() {
+let Enemy = function() {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
-  const position = function () {
-    const position =  Math.ceil(Math.random()*3);
+
+  const position = function() {
+    //fn to select random position mode
+    const position = Math.ceil(Math.random() * 3);
     if (position === 1) {
       return 225;
     } else if (position === 2) {
@@ -12,21 +13,23 @@ var Enemy = function() {
     } else if (position === 3) {
       return 60;
     }
-  }
+  };
 
-const speed = function () {
-  const speed =  Math.ceil(Math.random()*3);
-  if (speed === 1) {
-    return 15;
-  } else if (speed === 2) {
-    return 25;
-  } else if (speed === 3) {
-    return 35;
-  }
-}
+  const speed = function() {
+    // fn to select random speed mode
+    const speed = Math.ceil(Math.random() * 3);
+    if (speed === 1) {
+      return 15;
+    } else if (speed === 2) {
+      return 25;
+    } else if (speed === 3) {
+      return 35;
+    }
+  };
 
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
+
   this.sprite = "images/enemy-bug.png";
   this.randomSpeed = speed();
   this.randomPosition = position();
@@ -38,33 +41,23 @@ const speed = function () {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+
 Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
-  // console.log(dt);
-  // console.log(allEnemies.length);
+
   this.collisionDetection();
 
   if (this.x < 505) {
     this.x += 10 * (dt * this.randomSpeed);
-    // this.x += 10 * dt;
-    // allEnemies.shift();
-    // if (allEnemies.length < 6) {
-    //   allEnemies.push(new Enemy())
-    // }
   } else {
     this.x = 0;
   }
-
-  // console.log(this.randomPosition);
   this.y = this.randomPosition;
-  // this.y = 225;
-  // this.y = 145;
-  // this.y = 60;
 };
 
-Enemy.prototype.collisionDetection = function () {
+Enemy.prototype.collisionDetection = function() {
   // Adapted from MDN: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
   let dx = this.x - player.x;
   let dy = this.y - player.y;
@@ -77,19 +70,16 @@ Enemy.prototype.collisionDetection = function () {
     this.height + this.y > player.y
   ) {
     // collision detected!
-    console.log("colision detected");
+    // console.log("colision detected");
     // return true;
-    player.ctrlX = 200;
-    player.ctrlY = 400;
+    player.reset();
   }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
-// let bug = new Enemy();
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -100,49 +90,23 @@ let Player = function() {
   this.ctrlY = 400;
   this.height = 50;
   this.width = 50;
-  // this.x = 200;
-  // this.y = 200;
 };
 
-Player.prototype.reset = function () {
-  // if reach watter reset
-  // if collision reset
-
-  // function colision (val) {// need to find a better or more intuitive solution
-  //   return val.collisionDetection();
-  // }
-
-// if (allEnemies.every(colision)) {
-//   this.ctrlX = 200;
-//   this.ctrlY = 400;
-// } else if (this.y === 0) {
-//   this.ctrlX = 200;
-//   this.ctrlY = 400;
-// }
-
-// if (this.y === -25) {
+Player.prototype.reset = function() {
   this.ctrlX = 200;
   this.ctrlY = 400;
-// }
-
-  // allEnemies.forEach(function (bug) {
-  //   if (bug.collisionDetection()) {
-  //     this.ctrlX = 200;
-  //     this.ctrlY = 400;
-  //   }
-  // })
-
-}
+  allEnemies = [];
+  while (allEnemies.length < 3) {
+    allEnemies.push(new Enemy());
+  }
+};
 
 Player.prototype.update = function() {
-
   this.x = this.ctrlX;
   this.y = this.ctrlY;
-  if (this.y === -25){
+  if (this.y === -25) {
     this.reset();
   }
-
-
 };
 
 Player.prototype.render = function() {
@@ -181,7 +145,6 @@ Player.prototype.handleInput = function(key) {
         this.ctrlY = 400;
       }
       break;
-    // default:
   }
 };
 
@@ -190,10 +153,9 @@ Player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 let allEnemies = [];
 while (allEnemies.length < 3) {
-  allEnemies.push(new Enemy())
+  allEnemies.push(new Enemy());
 }
 
-// allEnemies.push(new Enemy());
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
