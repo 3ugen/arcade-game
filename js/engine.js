@@ -158,8 +158,8 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-        // ctx.drawImage(Resources.get('images/Rock.png'), 405, 380);
-        // ctx.drawImage(Resources.get('images/Rock.png'), 0, 300);
+        ctx.drawImage(Resources.get('images/Rock.png'), 405, 380);
+        ctx.drawImage(Resources.get('images/Rock.png'), 0, 300);
 
         renderEntities();
     }
@@ -196,9 +196,9 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
-        // 'images/Heart.png',
-        // 'images/Rock.png'
+        'images/char-boy.png',
+        'images/Heart.png',
+        'images/Rock.png'
     ]);
     Resources.onReady(init);
 

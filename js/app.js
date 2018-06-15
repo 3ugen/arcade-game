@@ -85,6 +85,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 let Player = function() {
+  this.win = false;
   this.sprite = "images/char-boy.png";
   this.ctrlX = 200;
   this.ctrlY = 400;
@@ -93,6 +94,7 @@ let Player = function() {
 };
 
 Player.prototype.reset = function() {
+  this.win = false;
   this.ctrlX = 200;
   this.ctrlY = 400;
   allEnemies = [];
@@ -105,18 +107,27 @@ Player.prototype.update = function() {
   this.x = this.ctrlX;
   this.y = this.ctrlY;
   if (this.y === -25) {
-    // this.win();
-    this.reset();
+    this.win = true;
+    // this.reset();
   }
 };
 
-// Player.prototype.win = function () {
-//   this.reset();
-//   allEnemies = [];
-// }
-
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  if (this.win) {
+    ctx.font = "42px sans";
+    ctx.fillText('YOU  WON!', 150, 260)
+    ctx.fillText('Press enter', 170, 360)
+    allEnemies = [];
+    window.addEventListener('keydown', function (e) {
+       let key = e.keyCode;
+       if (key === 13)// p key
+       {
+         player.reset();
+       }
+     });
+    // this.reset();
+  }
 };
 
 Player.prototype.handleInput = function(key) {
