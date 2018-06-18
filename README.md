@@ -17,4 +17,4 @@ The player must reach water and avoid being hit by passing bugs.
 ## To run the game locally:
 
 1. Download and unzip [this file](https://github.com/3ugen/arcade-game/archive/master.zip).
-2. Open 'index.html'
+2. Open `index.html`
