@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 "use strict";
 /*jshint esversion: 6 */
+=======
+/*jshint esversion: 6 */
+
+>>>>>>> f5b08ed4e5a588a5be00f349d82e4bb3dfed49b8
 // Enemies our player must avoid
 let Enemy = function() {
   // Variables applied to each of our instances go here,
@@ -61,6 +66,13 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.collisionDetection = function() {
   // Adapted from MDN: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+<<<<<<< HEAD
+=======
+  let dx = this.x - player.x;
+  let dy = this.y - player.y;
+  // let distance = Math.sqrt(dx * dx + dy * dy);
+
+>>>>>>> f5b08ed4e5a588a5be00f349d82e4bb3dfed49b8
   if (
     this.x < player.x + player.width &&
     this.x + this.width > player.x &&
