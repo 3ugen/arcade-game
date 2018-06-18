@@ -1,3 +1,5 @@
+"use strict";
+/*jshint esversion: 6 */
 // Enemies our player must avoid
 let Enemy = function() {
   // Variables applied to each of our instances go here,
@@ -59,10 +61,6 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.collisionDetection = function() {
   // Adapted from MDN: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-  let dx = this.x - player.x;
-  let dy = this.y - player.y;
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
   if (
     this.x < player.x + player.width &&
     this.x + this.width > player.x &&
@@ -116,16 +114,16 @@ Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   if (this.win) {
     ctx.font = "42px sans";
-    ctx.fillText('YOU  WON!', 150, 260)
-    ctx.fillText('Press enter', 170, 360)
+    ctx.fillText("YOU  WON!", 150, 260);
+    ctx.fillText("Press enter", 170, 360);
     allEnemies = [];
-    window.addEventListener('keydown', function (e) {
-       let key = e.keyCode;
-       if (key === 13)// p key
-       {
-         player.reset();
-       }
-     });
+    window.addEventListener("keydown", function(e) {
+      let key = e.keyCode;
+      if (key === 13) {
+        // p key
+        player.reset();
+      }
+    });
     // this.reset();
   }
 };
